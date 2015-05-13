@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     final View actionB = findViewById(R.id.action_b);
 
     FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
-    actionC.setTitle("Hide/Show Action B");
+    actionC.setTitle("Hide/Show Action above");
     actionC.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -42,6 +42,14 @@ public class MainActivity extends Activity {
       }
     });
     ((FloatingActionsMenu) findViewById(R.id.multiple_actions)).addButton(actionC);
+
+    final FloatingActionButton removeAction = (FloatingActionButton) findViewById(R.id.button_remove);
+    removeAction.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ((FloatingActionsMenu) findViewById(R.id.multiple_actions_down)).removeButton(removeAction);
+      }
+    });
 
     ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
     drawable.getPaint().setColor(getResources().getColor(R.color.white));
@@ -54,5 +62,8 @@ public class MainActivity extends Activity {
         actionA.setTitle("Action A clicked");
       }
     });
+
+    // Test that FAMs containing FABs with visibility GONE do not cause crashes
+    findViewById(R.id.button_gone).setVisibility(View.GONE);
   }
 }
